@@ -2,9 +2,20 @@ package ar.cabralmartin.movierecommender.lesson2;
 
 public class RecommenderImplementation {
 
-    public String[] recommendMovies(String movie) {
-        ContentBasedFilter filter = new ContentBasedFilter();
+    private Filter filter;
 
-        return filter.getRecommendations(movie);
+    public RecommenderImplementation(Filter filter) {
+
+        super();
+        this.filter = filter;
+
+    }
+
+    public String[] recommendMovies(String movie) {
+
+
+        System.out.println("Name of the filter in use: " + filter + "\n");
+        String[] results = filter.getRecommendations("Finding Dory");
+        return results;
     }
 }
