@@ -1,30 +1,38 @@
 package ar.cabralmartin.movierecommender;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import ar.cabralmartin.movierecommender.Filter;
 import org.springframework.stereotype.Component;
 
-@Component("CBF")
-public class ContentBasedFilter implements Filter {
-    private static int instances= 0;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
-    @Autowired
-    Movie movie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Component
+public class ContentBasedFilter implements Filter {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public ContentBasedFilter() {
-        instances++;
-        System.out.println("ContentBasedFilter constructor called");
+        super();
+        logger.info("In ContentBasedFilter constructor method");
     }
 
-    public Movie getMovie() {
-        return movie;
+    @PostConstruct
+    private void postConstruct() {
+        //load movies into cache
+        logger.info("In ContentBasedFilter postConstruct method");
     }
 
-    public static int getInstances(){
-        return ContentBasedFilter.instances;
+    @PreDestroy
+    private void preDestroy() {
+        //clear movies from cache
+        logger.info("In ContentBasedFilter preDestroy method");
     }
 
     public String[] getRecommendations(String movie) {
-        return new String[]{"Happy Feet", "Ice Age", "Shark Tale"};
+        //logic of content based filter
+        return new String[] {"Happy Feet", "Ice Age", "Shark Tale"};
     }
 }
