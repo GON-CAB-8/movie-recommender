@@ -8,13 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RecommenderImplementation {
 
-    @Autowired
-    @Qualifier("CF")
     private Filter filter;
 
-    public String [] recommendMovies (String movie) {
+    @Autowired
+    public RecommenderImplementation(@Qualifier("CBF") Filter filter) {
+        super();
+        this.filter = filter;
+        System.out.println("Constructor executed...");
+    }
+
+    public String[] recommendMovies(String movie) {
         System.out.println("\nName of the filter in use: " + filter + "\n");
-        String[] results = filter.getRecommendations("Finding Dory");
-        return results;
+        return filter.getRecommendations("Finding Dory");
     }
 }
